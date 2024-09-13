@@ -5,6 +5,7 @@ const suggestionMessages = [fns.createMessage("user", fns.getSuggestion())];
 const messages = [];
 
 async function chatWithGPT() {
+  fns.rendermarkdown();
   if (suggestionMessages.length < 2) {
     const { answer } = await fns.callOpenAi({
       messages: suggestionMessages,
@@ -20,10 +21,11 @@ async function chatWithGPT() {
     chatWithGPT();
   } else {
     const { answer } = await fns.callOpenAi({ messages });
-    fns.writeMarkdown(fns.processMarkdown(answer));
+    if(answer.chapterProgress ===4) {
+      process.exit();
+    }
     messages.push(fns.createMessage("assistant", answer));
     messages.push(fns.createMessage("user", "continue"));
-    console.log(ansewr.substring(0,50));
     chatWithGPT();
   }
 }
