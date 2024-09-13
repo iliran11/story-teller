@@ -31,6 +31,7 @@ like:
   * create your own future predictions or illusions.
   Your input will be only the subject itself in a JSON format. the key should be "topic"
 `;
+return instruction.replaceAll('\n','')
 };
 
 const createMessage = (role, content) => {
@@ -55,13 +56,16 @@ const callOpenAi = async ({ messages, json }) => {
   if (json) {
     answer = JSON.parse(answer);
   }
+  if (!json) {
+    console.log(answer.substring(0, 50));
+  }
   return {
     answer,
   };
 };
 
 const processMarkdown = (input) => {
-  const formattedMarkdown = input .replace(/\\n/g, "\n");
+  const formattedMarkdown = input.replace(/\\n/g, "\n");
   return formattedMarkdown;
 };
 
@@ -75,5 +79,5 @@ module.exports = {
   createMessage,
   callOpenAi,
   processMarkdown,
-  writeMarkdown
+  writeMarkdown,
 };
