@@ -1,5 +1,5 @@
-const fns = require("./functions");
 require('dotenv').config()
+const fns = require("./functions");
 
 const suggestionMessages = [fns.createMessage("user", fns.getSuggestion())];
 const messages = [];
@@ -23,7 +23,7 @@ async function chatWithGPT() {
     fns.writeMarkdown(fns.processMarkdown(answer));
     messages.push(fns.createMessage("assistant", answer));
     messages.push(fns.createMessage("user", "continue"));
-    console;
+    console.log(ansewr.substring(0,50));
     chatWithGPT();
   }
 }
