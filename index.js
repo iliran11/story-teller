@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fns = require("./functions");
 
-const suggestionMessages = [fns.createMessage("user", fns.getSuggestion())];
+const suggestionMessages = [fns.createMessage("user", fns.instruction.getSuggestion())];
 const messages = [];
 
 async function chatWithGPT() {
@@ -16,7 +16,7 @@ async function chatWithGPT() {
     }
     console.log(`[Bot][Suggestion]: ${answer.topic}`);
     messages.push(
-      fns.createMessage("system", fns.getInstructions(answer.topic))
+      fns.createMessage("system", fns.instruction.getStoryTelling(answer.topic))
     );
     fns.rendermarkdown(`# ${answer.topic}`);
     chatWithGPT();

@@ -1,0 +1,6 @@
+Choose a random topic that can make a great story. The topic should be an actual event that took place in the history.
+like:
+  history about military battles interesting diplomatic standoffs,
+  geopolitics from the present and past,
+  create your own future predictions or illusions,
+  Your input will be only the subject itself in a JSON format. the key should be "topic"
