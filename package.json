@@ -5,6 +5,10 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "eslint": "^9.10.0",
     "openai": "^4.58.1"
+  },
+  "scripts": {
+    "lint": "eslint ."
   }
 }

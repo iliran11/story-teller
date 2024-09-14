@@ -1,11 +1,9 @@
 const fs = require("fs");
-const markdownit = require("markdown-it");
 const OpenAI = require("openai");
 const apiKey = process.env.OPENAI_API_KEY;
 const client = new OpenAI({
   apiKey: apiKey, // This is the default and can be omitted
 });
-const md = markdownit();
 
 const nobreaklines = (str) => str.replace(/(\r\n|\n|\r)/gm, "");
 
@@ -38,7 +36,10 @@ like:
   return result;
 };
 
-const rendermarkdown = () => {};
+const rendermarkdown = (str) => {
+  fs.appendFileSync('./temp.md',`${str}\n`,'utf-8');
+  return;
+};
 
 const createMessage = (role, content) => {
   const text = role === "user" ? content : JSON.stringify(content);
@@ -67,10 +68,6 @@ const callOpenAi = async ({ messages }) => {
   };
 };
 
-const writeMarkdown = (input) => {
-  fs.appendFileSync("./temp.md", input, "utf-8");
-};
-
 const navigator = (messages) => {};
 
 module.exports = {
@@ -78,6 +75,5 @@ module.exports = {
   getSuggestion,
   createMessage,
   callOpenAi,
-  writeMarkdown,
   rendermarkdown,
 };
