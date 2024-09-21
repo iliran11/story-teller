@@ -2,17 +2,20 @@ require("dotenv").config();
 const fns = require("./functions");
 const getTopic = require("./getTopic");
 
-async function chatWithGPT(messages) {
-  const { answer } = await fns.callOpenAi({ messages });
-  if (answer.chapterProgress === 4) {
-    process.exit();
+async function chatWithGPT(messages, sequence = 1) {
+  if (sequence === 4) {
+    console.log("[System] - DONE");
+    return;
   }
-  console.log(`[Bot][Answer] - Progess - ${answer.chapterProgress}`);
+  const { answer } = await fns.callOpenAi({ messages });
+  console.log(
+    `[Bot][Answer] - Sequence: ${sequence}, Title: ${answer.chapterTitle}`
+  );
   fns.rendermarkdown(`## ${answer.chapterTitle}`);
   fns.rendermarkdown(answer.chapterContent);
   messages.push(fns.createMessage("assistant", answer));
   messages.push(fns.createMessage("user", "continue"));
-  chatWithGPT(messages);
+  chatWithGPT(messages, sequence + 1);
 }
 
 const run = async () => {
