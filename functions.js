@@ -9,9 +9,16 @@ const nobreaklines = (str) => str.replace(/(\r\n|\n|\r)/gm, "");
 
 const instruction = {
   getSuggestion: () => {
+    const usedTopics = fs.readFileSync(
+      "./instructions/used-topics.txt",
+      "utf-8"
+    );
     const instruction = fs.readFileSync(
       "./instructions/suggestion.txt",
       "utf8"
+    );
+    return nobreaklines(
+      `${instruction}. Do not used the following topics: ${usedTopics}`
     );
     return nobreaklines(instruction);
   },
@@ -32,8 +39,8 @@ const instruction = {
   },
 };
 
-const rendermarkdown = (str) => {
-  fs.appendFileSync("./temp.md", `${str}\n`, "utf-8");
+const write = (str, filename) => {
+  fs.appendFileSync(`./stories/${filename}.md`, `${str}\n`, "utf-8");
   return;
 };
 
@@ -64,10 +71,9 @@ const callOpenAi = async ({ messages }) => {
   };
 };
 
-
 module.exports = {
   instruction,
   createMessage,
   callOpenAi,
-  rendermarkdown,
+  write,
 };
