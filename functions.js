@@ -64,6 +64,7 @@ const callOpenAi = async ({ messages }) => {
   };
 };
 
+
 module.exports = {
   instruction,
   createMessage,
